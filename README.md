@@ -19,4 +19,6 @@ When providing DNS servers, you can provide as many DNS servers as you want and 
 
 ## Exposed Metrics
 Metrics are available on `/metrics`.
-Currently only one metric is available, `dns_lookup_speed`. This metric has three values, `host` which is the hostname of the device, `url` which is the hostname used for lookup, and `dns_server` which is the DNS server being used for this request.
+
+- `dns_lookup_speed`: Reports the speed of the DNS query 
+` dns_errors_total`: Reports the number of times a DNS error occurred
