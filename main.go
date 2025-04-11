@@ -36,6 +36,10 @@ var (
 		Namespace: namespace,
 		Name:      "dns_lookup_speed",
 	}, []string{"host", "url", "dns_server"})
+	dnsErrorCounter = promauto.NewCounterVec(prometheus.CounterOpts{
+		Namespace: namespace,
+		Name:      "dns_errors_total",
+	}, []string{"host", "url", "dns_server"})
 )
 
 func main() {
@@ -62,6 +66,7 @@ func collectMetrics() {
 		for _, server := range args.DNSServers {
 			duration, err := getDnsLookupTime(server)
 			if err != nil {
+				dnsErrorCounter.WithLabelValues(hostname, args.Hostname, server).Inc()
 				logger.Error("failed to perform DNS lookup", "error", err.Error())
 				continue
 			}
